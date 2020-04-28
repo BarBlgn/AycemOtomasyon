@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AycemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="AycemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Colour" EntityType="AycemModel.Colour" />
+    <EntitySet Name="Company" EntityType="AycemModel.Company" />
+    <EntitySet Name="Material" EntityType="AycemModel.Material" />
+    <EntitySet Name="Order" EntityType="AycemModel.Order" />
+    <EntitySet Name="OrderItem" EntityType="AycemModel.OrderItem" />
+    <EntitySet Name="Page" EntityType="AycemModel.Page" />
+    <EntitySet Name="Permission" EntityType="AycemModel.Permission" />
+    <EntitySet Name="Porduct" EntityType="AycemModel.Porduct" />
+    <EntitySet Name="Role" EntityType="AycemModel.Role" />
+    <EntitySet Name="sysdiagrams" EntityType="AycemModel.sysdiagrams" />
+    <EntitySet Name="User" EntityType="AycemModel.User" />
+    <AssociationSet Name="FK_Colour_Colour" Association="AycemModel.FK_Colour_Colour">
+      <End Role="Colour" EntitySet="Colour" />
+      <End Role="Colour1" EntitySet="Colour" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Material_Colour" Association="AycemModel.FK_Material_Colour">
+      <End Role="Colour" EntitySet="Colour" />
+      <End Role="Material" EntitySet="Material" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Colour" Association="AycemModel.FK_OrderItem_Colour">
+      <End Role="Colour" EntitySet="Colour" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Company" Association="AycemModel.FK_Order_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Order" Association="AycemModel.FK_OrderItem_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Porduct" Association="AycemModel.FK_OrderItem_Porduct">
+      <End Role="Porduct" EntitySet="Porduct" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permission_Page" Association="AycemModel.FK_Permission_Page">
+      <End Role="Page" EntitySet="Page" />
+      <End Role="Permission" EntitySet="Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permission_Role" Association="AycemModel.FK_Permission_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Permission" EntitySet="Permission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="AycemModel.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_User" Association="AycemModel.FK_User_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="User1" EntitySet="User" />
+    </AssociationSet>
+    <EntitySet Name="Error" EntityType="AycemModel.Error" />
+    <EntitySet Name="Machines" EntityType="AycemModel.Machines" />
+  </EntityContainer>
+  <EntityType Name="Colour">
+    <Key>
+      <PropertyRef Name="ColourId" />
+    </Key>
+    <Property Name="ColourId" Type="Guid" Nullable="false" />
+    <Property Name="ColourName" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Colour1" Relationship="AycemModel.FK_Colour_Colour" FromRole="Colour" ToRole="Colour1" />
+    <NavigationProperty Name="Colour2" Relationship="AycemModel.FK_Colour_Colour" FromRole="Colour1" ToRole="Colour" />
+    <NavigationProperty Name="Material" Relationship="AycemModel.FK_Material_Colour" FromRole="Colour" ToRole="Material" />
+    <NavigationProperty Name="OrderItem" Relationship="AycemModel.FK_OrderItem_Colour" FromRole="Colour" ToRole="OrderItem" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="Guid" Nullable="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyTelNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Order" Relationship="AycemModel.FK_Order_Company" FromRole="Company" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Material">
+    <Key>
+      <PropertyRef Name="MaterialId" />
+    </Key>
+    <Property Name="MaterialId" Type="Guid" Nullable="false" />
+    <Property Name="MaterialQuantity" Type="Int32" Nullable="false" />
+    <Property Name="MaterialName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MaterialPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="ColourId" Type="Guid" />
+    <NavigationProperty Name="Colour" Relationship="AycemModel.FK_Material_Colour" FromRole="Material" ToRole="Colour" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Guid" Nullable="false" />
+    <Property Name="OrderQuantity" Type="Int32" Nullable="false" />
+    <Property Name="OrderExpiryDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="ModifierRoleId" Type="Guid" Nullable="false" />
+    <Property Name="CompanyId" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="Company" Relationship="AycemModel.FK_Order_Company" FromRole="Order" ToRole="Company" />
+    <NavigationProperty Name="OrderItem" Relationship="AycemModel.FK_OrderItem_Order" FromRole="Order" ToRole="OrderItem" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="OrderItemId" />
+    </Key>
+    <Property Name="OrderItemId" Type="Guid" Nullable="false" />
+    <Property Name="OrderId" Type="Guid" Nullable="false" />
+    <Property Name="ProductId" Type="Guid" Nullable="false" />
+    <Property Name="ColourId" Type="Guid" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="Colour" Relationship="AycemModel.FK_OrderItem_Colour" FromRole="OrderItem" ToRole="Colour" />
+    <NavigationProperty Name="Order" Relationship="AycemModel.FK_OrderItem_Order" FromRole="OrderItem" ToRole="Order" />
+    <NavigationProperty Name="Porduct" Relationship="AycemModel.FK_OrderItem_Porduct" FromRole="OrderItem" ToRole="Porduct" />
+  </EntityType>
+  <EntityType Name="Page">
+    <Key>
+      <PropertyRef Name="PageId" />
+    </Key>
+    <Property Name="PageId" Type="Guid" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Permission" Relationship="AycemModel.FK_Permission_Page" FromRole="Page" ToRole="Permission" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="PermissionId" />
+    </Key>
+    <Property Name="PermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="PageId" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="Page" Relationship="AycemModel.FK_Permission_Page" FromRole="Permission" ToRole="Page" />
+    <NavigationProperty Name="Role" Relationship="AycemModel.FK_Permission_Role" FromRole="Permission" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="Porduct">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Guid" Nullable="false" />
+    <Property Name="ProductName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ColourId" Type="Guid" />
+    <NavigationProperty Name="OrderItem" Relationship="AycemModel.FK_OrderItem_Porduct" FromRole="Porduct" ToRole="OrderItem" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ParentRoleId" Type="Guid" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Permission" Relationship="AycemModel.FK_Permission_Role" FromRole="Role" ToRole="Permission" />
+    <NavigationProperty Name="User" Relationship="AycemModel.FK_User_Role" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Guid" Nullable="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Guid" />
+    <NavigationProperty Name="Role" Relationship="AycemModel.FK_User_Role" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="User1" Relationship="AycemModel.FK_User_User" FromRole="User" ToRole="User1" />
+    <NavigationProperty Name="User2" Relationship="AycemModel.FK_User_User" FromRole="User1" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Colour_Colour">
+    <End Type="AycemModel.Colour" Role="Colour" Multiplicity="1" />
+    <End Type="AycemModel.Colour" Role="Colour1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Colour">
+        <PropertyRef Name="ColourId" />
+      </Principal>
+      <Dependent Role="Colour1">
+        <PropertyRef Name="ColourId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Material_Colour">
+    <End Type="AycemModel.Colour" Role="Colour" Multiplicity="0..1" />
+    <End Type="AycemModel.Material" Role="Material" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Colour">
+        <PropertyRef Name="ColourId" />
+      </Principal>
+      <Dependent Role="Material">
+        <PropertyRef Name="ColourId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Colour">
+    <End Type="AycemModel.Colour" Role="Colour" Multiplicity="1" />
+    <End Type="AycemModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Colour">
+        <PropertyRef Name="ColourId" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="ColourId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Company">
+    <End Type="AycemModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="AycemModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Order">
+    <End Type="AycemModel.Order" Role="Order" Multiplicity="1" />
+    <End Type="AycemModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Porduct">
+    <End Type="AycemModel.Porduct" Role="Porduct" Multiplicity="1" />
+    <End Type="AycemModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Porduct">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permission_Page">
+    <End Type="AycemModel.Page" Role="Page" Multiplicity="1" />
+    <End Type="AycemModel.Permission" Role="Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="PageId" />
+      </Principal>
+      <Dependent Role="Permission">
+        <PropertyRef Name="PageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permission_Role">
+    <End Type="AycemModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="AycemModel.Permission" Role="Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="Permission">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Type="AycemModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="AycemModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_User">
+    <End Type="AycemModel.User" Role="User" Multiplicity="1" />
+    <End Type="AycemModel.User" Role="User1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="User1">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Error">
+    <Key>
+      <PropertyRef Name="ErrorId" />
+    </Key>
+    <Property Name="ErrorId" Type="Guid" Nullable="false" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Machines">
+    <Key>
+      <PropertyRef Name="MachineId" />
+    </Key>
+    <Property Name="MachineId" Type="Guid" Nullable="false" />
+    <Property Name="MachineName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ProductionCapacity" Type="Int32" Nullable="false" />
+    <Property Name="ProductionFail" Type="Int32" Nullable="false" />
+  </EntityType>
+</Schema>
